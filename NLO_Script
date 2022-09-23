@@ -1,0 +1,925 @@
+from math import cos, exp, pi, log, sqrt, atan, tan
+from scipy.integrate import quad
+# pip install scipy  
+import matplotlib.pyplot as plt 
+# python -m pip install -U matplotlib
+import numpy as np
+
+print(
+'''
+\n####################################################
+###        NLO Related Calculation Script        ###
+###	        Replicated by CkQuah             ###
+###	         Version :  210531               ###
+####################################################
+
+msg : Reading "input.txt" located in the same folder.
+'''
+)
+
+# Reading input from txt
+f = open("input.txt", "r")
+l_1 = f.readline()
+l_2 = f.readline()
+l_3 = f.readline()
+l_4 = f.readline()
+l_5 = f.readline()
+l_6 = f.readline()
+l_7 = f.readline()
+l_8 = f.readline()
+l_9 = f.readline()
+l_10 = f.readline()
+l_11 = f.readline()
+l_12 = f.readline()
+l_13 = f.readline()
+l_14 = f.readline()
+l_15 = f.readline()
+l_16 = f.readline()
+l_17 = f.readline()
+l_18 = f.readline()
+l_19 = f.readline()
+l_20 = f.readline()
+l_21 = f.readline()
+l_22 = f.readline()
+l_23 = f.readline()
+l_24 = f.readline()
+l_25 = f.readline()
+l_26 = f.readline()
+l_27 = f.readline()
+l_28 = f.readline()
+l_29 = f.readline()
+l_30 = f.readline()
+l_31 = f.readline()
+l_32 = f.readline()
+l_33 = f.readline()
+l_34 = f.readline()
+l_35 = f.readline()
+l_36 = f.readline()
+l_37 = f.readline()
+l_38 = f.readline()
+l_39 = f.readline()
+l_40 = f.readline()
+l_41 = f.readline()
+
+# assigning input to variables
+l_LE = float(l_4[45:])
+LE = l_LE
+l_ZR = float(l_5[45:])
+ZO = l_ZR
+l_A2 = float(l_9[45:])
+l_A3 = float(l_10[45:])
+l_A4 = float(l_11[45:])	
+l_A5 = float(l_12[45:])	
+l_IO2 = float(l_13[45:])	
+l_IO3 = float(l_14[45:])	
+l_IO4 = float(l_15[45:])	
+l_IO5 = float(l_16[45:])
+l_ZR = float(l_17[45:])
+l_ZI = float(l_18[45:])
+l_SI = float(l_22[45:])
+l_RI = float(l_23[45:])	
+l_II = float(l_24[45:])	
+l_ZV = float(l_25[45:])	
+l_ZP = float(l_26[45:])	
+l_EA2 = float(l_30[45:])
+l_EW = float(l_31[45:])	
+l_CO = float(l_32[45:])
+l_EI = float(l_33[45:])
+l_AO = float(l_37[45:])	
+l_SI2 = float(l_38[45:])	
+l_RI2 = float(l_39[45:])	
+l_II2 = float(l_40[45:])	
+l_WO2 = float(l_41[45:])	
+
+
+print(
+'''
+************** Main Menu Options **************
+ 0 Show the content of "input.txt".
+ 1 NPA graph with varied z-number 
+ 2 NPA graph with varied intensities 
+ 3 Optical limiting graph with varied intensities
+ 4 Calculation of cross-section NPA 
+ 5 ...
+ 9 Quit Program          
+'''
+)
+m_input = input ("Enter number:")
+	
+if '0' in m_input:
+  f_input = open("input.txt")
+  lines = f_input.readlines()
+  for line in lines:
+    print(line)
+
+if '9' in m_input:
+	exit()
+
+if '1' in m_input:
+	
+  print(
+  '''
+  ************** NPA graph with varied z-number **************
+   1 Show the content of "input.txt". 
+   2 Calculation of 2PA transmittance
+   3 Calculation of 3PA transmittance
+   4 Calculation of 4PA transmittance
+   5 Calculation of 5PA transmittance
+   6 Calculation of 2PA transmittance + Graph
+   7 Calculation of 3PA transmittance + Graph
+   8 Calculation of 4PA transmittance + Graph 
+   9 Calculation of 5PA transmittance + Graph
+   0 Calculate ALL and generate graphs
+   -1 Return to Main Menu Option          
+  '''
+  )
+  
+  m_input_1 = input ("Enter number:")
+  
+  z = float(l_ZR)
+  z1 = float(l_ZR)*-1
+  z3 = float(l_ZI)
+  z4 = z
+  ck2_2 = []
+  ck2_3 = []
+  ck2_4 = []
+  ck2_5 = []
+  
+  if '1' in m_input_1:
+    f_input = open("input.txt")
+    lines = f_input.readlines()
+    for line in lines:
+      print(line)
+  
+  if '2' in m_input_1 or '6' in m_input_1 or '0' in m_input_1:
+    f = open("2pa_output.txt", "w")
+    f.write('Output is in the seqeuence of "z-distance" and "transmittance"\n\n') 
+    f.close()
+    print(' Calculating 2PA...')
+  
+    IO = l_IO2
+    A2 = l_A2
+    z = z4
+    ck1 = []
+  
+    while z > z1 - z3:
+
+      def f(x):
+
+        return (1/((sqrt(3.142)*(((A2*IO*LE)/(1+(z**2/ZO**2)))))))*log(1+(((A2*IO*LE)/(1+(z**2/ZO**2)))*exp(-(x**2))))
+       
+      res, err = quad(f, -100, 100)
+      roundZ = round(z, 3)
+      roundZ1 = str(roundZ)
+      res2 = round(res, 5)
+      res1 = str(res2)
+      f = open("2pa_output.txt", "a")
+      f.write(roundZ1 + " " + res1 + "\n") 
+      f.close()
+      roundz = round(z, 2)
+      ck1.append(roundz)
+      ck2_2.append(res2)
+      z = z - z3
+    print('\n \n Done! You can check the output from 2pa_output.txt')
+
+  if '3' in m_input_1 or '7' in m_input_1 or '0' in m_input_1:
+    f = open("3pa_output.txt", "w")
+    f.write('Output is in the seqeuence of "z-distance" and "transmittance"\n\n') 
+    f.close()
+    print(' Calculating 3PA...')
+  
+    IO = l_IO3
+    A2 = l_A3
+    z = z4
+    ck1 = []
+  
+    while z > z1 - z3:
+
+      def f(x):
+
+        return (1/((sqrt(3.142)*(sqrt(2*A2*LE*(IO**2)/((1+((z**2)/(ZO**2)))**2))))))*(log((sqrt((2*A2*LE*IO**2/((1+(z**2/ZO**2))**2))*x**2))+(sqrt(1+(2*A2*LE*IO**2/((1+(z**2/ZO**2))**2))*x**2))))/(x*sqrt(-log(x)))
+       
+      res, err = quad(f, 0.0001, 0.9999)
+      roundZ = round(z, 3)
+      roundZ1 = str(roundZ)
+      res2 = round(res, 5)
+      res1 = str(res2)
+      f = open("3pa_output.txt", "a")
+      f.write(roundZ1 + " " + res1 + "\n") 
+      f.close()
+      roundz = round(z, 2)
+      ck1.append(roundz)
+      ck2_3.append(res2)
+      z = z - z3
+    print('\n \n Done! You can check the output from 3pa_output.txt')
+
+  if '4' in m_input_1 or '8' in m_input_1 or '0' in m_input_1:
+    f = open("4pa_output.txt", "w")
+    f.write('Output is in the seqeuence of "z-distance" and "transmittance"\n\n') 
+    f.close()
+    print(' Calculating 4PA...')
+  
+    IO = l_IO4
+    A2 = l_A4
+    z = z4
+    ck1 = []
+  
+    while z > z1 - z3:
+
+      def f(x):
+
+        return (1/(3*sqrt(3.142)*((3*A2*LE*IO**3/((1+(z**2/ZO**2))**3))**0.3333)))*((log(sqrt(((1+((3*A2*LE*IO**3/((1+(z**2/ZO**2))**3))*x**3)**-1)**(1/3))**2+((1+((3*A2*LE*IO**3/((1+(z**2/ZO**2))**3))*x**3)**-1)**(1/3))+1)/(((1+((3*A2*LE*IO**3/((1+(z**2/ZO**2))**3))*x**3)**-1)**(1/3))-1)))-(1.732*atan((2*((1+((3*A2*LE*IO**3/((1+(z**2/ZO**2))**3))*x**3)**-1)**(1/3))+1)/1.732))+2.7210)/(x*sqrt(-log(x)))
+       
+      res, err = quad(f, 0.0001, 0.9999)
+      roundZ = round(z, 3)
+      roundZ1 = str(roundZ)
+      res2 = round(res, 5)
+      res1 = str(res2)
+      f = open("4pa_output.txt", "a")
+      f.write(roundZ1 + " " + res1 + "\n") 
+      f.close()
+      roundz = round(z, 2)
+      ck1.append(roundz)
+      ck2_4.append(res2)
+      z = z - z3
+    print('\n \n Done! You can check the output from 4pa_output.txt')
+      
+  if '5' in m_input_1 or '9' in m_input_1 or '0' in m_input_1:
+    f = open("5pa_output.txt", "w")
+    f.write('Output is in the seqeuence of "z-distance" and "transmittance"\n\n') 
+    f.close()
+    print(' Calculating 5PA...')
+  
+    IO = l_IO5
+    A2 = l_A5
+    z = z4
+    ck1 = []
+  
+    while z > z1 - z3:
+
+      def f(x):
+
+        return ((1/(2*(sqrt(3.142))*(((4*A2*LE*IO**4)/(1+(z**2/ZO**2))**4))**(1/4)))*((log(sqrt((((1+(((4*A2*LE*IO**4)/(1+(z**2/ZO**2))**4)*x**4)**-1)**0.25)+1)/(((1+(((4*A2*LE*IO**4)/(1+(z**2/ZO**2))**4)*x**4)**-1)**0.25)-1))))-(atan(((1+(((4*A2*LE*IO**4)/(1+(z**2/ZO**2))**4)*x**4)**-1)**0.25)))+(1.571)))/(x*sqrt(-log(x)))
+       
+      res, err = quad(f, 0.0001, 0.9999)
+      roundZ = round(z, 3)
+      roundZ1 = str(roundZ)
+      res2 = round(res, 5)
+      res1 = str(res2)
+      f = open("5pa_output.txt", "a")
+      f.write(roundZ1 + " " + res1 + "\n") 
+      f.close()
+      roundz = round(z, 2)
+      ck1.append(roundz)
+      ck2_5.append(res2)
+      z = z - z3
+    print('\n \n Done! You can check the output from 5pa_output.txt')  
+  
+  xpoints = np.array(ck1)
+         
+  if '6' in m_input_1 or '0' in m_input_1:
+    ypoints_2 = np.array(ck2_2)
+    plt.plot(xpoints, ypoints_2, marker = '*', mec = 'k', mfc = 'k')
+  if '7' in m_input_1 or '0' in m_input_1:
+    ypoints_3 = np.array(ck2_3)
+    plt.plot(xpoints, ypoints_3, marker = '^', mec = 'r', mfc = 'r')
+  if '8' in m_input_1 or '0' in m_input_1:
+    ypoints_4 = np.array(ck2_4)
+    plt.plot(xpoints, ypoints_4, marker = 'o', mec = 'g', mfc = 'g')
+  if '9' in m_input_1 or '0' in m_input_1:
+    ypoints_5 = np.array(ck2_5)
+    plt.plot(xpoints, ypoints_5, marker = 's', mec = 'm', mfc = 'm') 
+  if '6' in m_input_1 or '7' in m_input_1 or '8' in m_input_1 or '9' in m_input_1 or '0' in m_input_1:        
+    print('\n\n2pa is black *, 3pa is red triangle, 4pa is green circle and 5pa is purple square')
+    font2 = {'family':'serif','color':'darkred','size':12}
+    plt.xlabel("Z-position (cm)", fontdict = font2)
+    plt.ylabel("Normalized Transmittance", fontdict = font2)
+    plt.grid(color = '#C0C0C0', linestyle = '--', linewidth = 0.5)
+    plt.legend(['2PA','3PA','4PA','5PA'])
+    plt.show()
+
+if '2' in m_input:
+  print(
+  '''
+  ************** NPA graph with varied intensities **************
+   1 Show the content of "input.txt". 
+   2 Calculation of 2PA with varied intensities
+   3 Calculation of 3PA with varied intensities
+   4 Calculation of 4PA with varied intensities
+   5 Calculation of 5PA with varied intensities
+   6 Calculation of 2PA transmittance with varied intensities + Graph
+   7 Calculation of 3PA transmittance with varied intensities + Graph
+   8 Calculation of 4PA transmittance with varied intensities + Graph 
+   9 Calculation of 5PA transmittance with varied intensities + Graph
+   0 Calculate ALL and generate graphs
+   -1 Return to Main Menu Option          
+  '''
+  )
+  m_input_2 = input ("Enter number:")
+
+  ck4_2 = []  
+  ck4_3 = []  
+  ck4_4 = []  
+  ck4_5 = []  
+
+  if '1' in m_input_2:
+    f_input = open("input.txt")
+    lines = f_input.readlines()
+    for line in lines:
+      print(line)
+
+  if '2' in m_input_2 or '6' in m_input_2 or '0' in m_input_2:
+
+    f = open("2pa_TvI_output.txt", "w")
+    f.write('Output is in the seqeuence of "Intensity", "Peak Transmittance", "Valley Transmittance" and "Delta Transmittance (%)" \n\n') 
+    f.close()
+    print(' Calculating 2pa_Transmittance vs Intensity...')
+    
+    IO = l_SI
+    A2 = l_A2
+    j = float(0)
+    ck3_2 = []
+    ri = l_RI
+    ii = l_II
+    
+    while j < ri:
+
+      z = l_ZP    
+
+      def f(x):
+
+        return (1/((sqrt(3.142)*(((A2*IO*LE)/(1+(z**2/ZO**2)))))))*log(1+(((A2*IO*LE)/(1+(z**2/ZO**2)))*exp(-(x**2))))
+                      
+      res, err = quad(f, -10, 10)
+
+      z = l_ZV    
+
+      def f(x):
+
+        return (1/((sqrt(3.142)*(((A2*IO*LE)/(1+(z**2/ZO**2)))))))*log(1+(((A2*IO*LE)/(1+(z**2/ZO**2)))*exp(-(x**2))))
+                      
+      res3, err = quad(f, -10, 10)
+
+      roundZ = round(IO, 3)
+      roundZ1 = str(roundZ)
+      res2 = round(res, 5)
+      res4 = round(res3, 5)
+      dres2 = res2 - res4
+      dres3 = round(dres2, 2)
+      res1 = str(res2)
+      res5 = str(res4)
+      dres = str(dres3)
+      f = open("2pa_TvI_output.txt", "a")
+      f.write(roundZ1 + " " + res1+ " " + res5 + " " + dres + "\n") 
+      f.close()
+      roundz = round(IO, 3)
+      ck3_2.append(roundz)
+      ck4_2.append(dres)
+      IO = IO + ii
+      j = j + 1
+      d21 = max(ck4_2)
+      d2 = float(d21)
+    print('\n \n Done! You can check the output from 2pa_TvI_output.txt')
+
+  if '3' in m_input_2 or '7' in m_input_2 or '0' in m_input_2:
+
+    f = open("3pa_TvI_output.txt", "w")
+    f.write('Output is in the seqeuence of "Intensity", "Peak Transmittance", "Valley Transmittance" and "Delta Transmittance (%)" \n\n') 
+    f.close()
+    print(' Calculating 3pa_Transmittance vs Intensity...')
+    
+    IO = l_SI
+    A2 = l_A3
+    j = float(0)
+    ck3_2 = []
+    ri = l_RI
+    ii = l_II
+    
+    while j < ri:
+
+      z = l_ZP    
+
+      def f(x):
+
+        return (1/((sqrt(3.142)*(sqrt(2*A2*LE*(IO**2)/((1+((z**2)/(ZO**2)))**2))))))*(log((sqrt((2*A2*LE*IO**2/((1+(z**2/ZO**2))**2))*x**2))+(sqrt(1+(2*A2*LE*IO**2/((1+(z**2/ZO**2))**2))*x**2))))/(x*sqrt(-log(x)))
+                      
+      res, err = quad(f, 0.0001, 0.9999)
+
+      z = l_ZV    
+
+      def f(x):
+
+        return (1/((sqrt(3.142)*(sqrt(2*A2*LE*(IO**2)/((1+((z**2)/(ZO**2)))**2))))))*(log((sqrt((2*A2*LE*IO**2/((1+(z**2/ZO**2))**2))*x**2))+(sqrt(1+(2*A2*LE*IO**2/((1+(z**2/ZO**2))**2))*x**2))))/(x*sqrt(-log(x)))
+                      
+      res3, err = quad(f, 0.0001, 0.9999)
+
+      roundZ = round(IO, 3)
+      roundZ1 = str(roundZ)
+      res2 = round(res, 5)
+      res4 = round(res3, 5)
+      dres2 = res2 - res4
+      dres3 = round(dres2, 2)
+      res1 = str(res2)
+      res5 = str(res4)
+      dres = str(dres3)
+      f = open("3pa_TvI_output.txt", "a")
+      f.write(roundZ1 + " " + res1+ " " + res5 + " " + dres + "\n") 
+      f.close()
+      roundz = round(IO, 3)
+      ck3_2.append(roundz)
+      ck4_3.append(dres)
+      IO = IO + ii
+      j = j + 1
+      d21 = max(ck4_3)
+      d3 = float(d21)
+    print('\n \n Done! You can check the output from 3pa_TvI_output.txt')
+
+  if '4' in m_input_2 or '8' in m_input_2 or '0' in m_input_2:
+
+    f = open("4pa_TvI_output.txt", "w")
+    f.write('Output is in the seqeuence of "Intensity", "Peak Transmittance", "Valley Transmittance" and "Delta Transmittance (%)" \n\n') 
+    f.close()
+    print(' Calculating 4pa_Transmittance vs Intensity...')
+    
+    IO = l_SI
+    A2 = l_A4
+    j = float(0)
+    ck3_2 = []
+    ri = l_RI
+    ii = l_II
+    
+    while j < ri:
+
+      z = l_ZP    
+
+      def f(x):
+
+        return (1/(3*sqrt(3.142)*((3*A2*LE*IO**3/((1+(z**2/ZO**2))**3))**0.3333)))*((log(sqrt(((1+((3*A2*LE*IO**3/((1+(z**2/ZO**2))**3))*x**3)**-1)**(1/3))**2+((1+((3*A2*LE*IO**3/((1+(z**2/ZO**2))**3))*x**3)**-1)**(1/3))+1)/(((1+((3*A2*LE*IO**3/((1+(z**2/ZO**2))**3))*x**3)**-1)**(1/3))-1)))-(1.732*atan((2*((1+((3*A2*LE*IO**3/((1+(z**2/ZO**2))**3))*x**3)**-1)**(1/3))+1)/1.732))+2.7210)/(x*sqrt(-log(x)))
+                      
+      res, err = quad(f, 0.0001, 0.9999)
+
+      z = l_ZV    
+
+      def f(x):
+
+        return (1/(3*sqrt(3.142)*((3*A2*LE*IO**3/((1+(z**2/ZO**2))**3))**0.3333)))*((log(sqrt(((1+((3*A2*LE*IO**3/((1+(z**2/ZO**2))**3))*x**3)**-1)**(1/3))**2+((1+((3*A2*LE*IO**3/((1+(z**2/ZO**2))**3))*x**3)**-1)**(1/3))+1)/(((1+((3*A2*LE*IO**3/((1+(z**2/ZO**2))**3))*x**3)**-1)**(1/3))-1)))-(1.732*atan((2*((1+((3*A2*LE*IO**3/((1+(z**2/ZO**2))**3))*x**3)**-1)**(1/3))+1)/1.732))+2.7210)/(x*sqrt(-log(x)))
+                      
+      res3, err = quad(f, 0.0001, 0.9999)
+
+      roundZ = round(IO, 3)
+      roundZ1 = str(roundZ)
+      res2 = round(res, 5)
+      res4 = round(res3, 5)
+      dres2 = res2 - res4
+      dres3 = round(dres2, 2)
+      res1 = str(res2)
+      res5 = str(res4)
+      dres = str(dres3)
+      f = open("4pa_TvI_output.txt", "a")
+      f.write(roundZ1 + " " + res1+ " " + res5 + " " + dres + "\n") 
+      f.close()
+      roundz = round(IO, 3)
+      ck3_2.append(roundz)
+      ck4_4.append(dres)
+      IO = IO + ii
+      j = j + 1
+      d21 = max(ck4_4)
+      d4 = float(d21)
+    print('\n \n Done! You can check the output from 4pa_TvI_output.txt')
+
+  if '5' in m_input_2 or '9' in m_input_2 or '0' in m_input_2:
+
+    f = open("5pa_TvI_output.txt", "w")
+    f.write('Output is in the seqeuence of "Intensity", "Peak Transmittance", "Valley Transmittance" and "Delta Transmittance (%)" \n\n') 
+    f.close()
+    print(' Calculating 5pa_Transmittance vs Intensity...')
+    
+    IO = l_SI
+    A2 = l_A5
+    j = float(0)
+    ck3_2 = []
+    ri = l_RI
+    ii = l_II
+    
+    while j < ri:
+
+      z = l_ZP    
+
+      def f(x):
+
+        return ((1/(2*(sqrt(3.142))*(((4*A2*LE*IO**4)/(1+(z**2/ZO**2))**4))**(1/4)))*((log(sqrt((((1+(((4*A2*LE*IO**4)/(1+(z**2/ZO**2))**4)*x**4)**-1)**0.25)+1)/(((1+(((4*A2*LE*IO**4)/(1+(z**2/ZO**2))**4)*x**4)**-1)**0.25)-1))))-(atan(((1+(((4*A2*LE*IO**4)/(1+(z**2/ZO**2))**4)*x**4)**-1)**0.25)))+(1.571)))/(x*sqrt(-log(x)))
+                      
+      res, err = quad(f, 0.0001, 0.9999)
+
+      z = l_ZV    
+
+      def f(x):
+
+        return ((1/(2*(sqrt(3.142))*(((4*A2*LE*IO**4)/(1+(z**2/ZO**2))**4))**(1/4)))*((log(sqrt((((1+(((4*A2*LE*IO**4)/(1+(z**2/ZO**2))**4)*x**4)**-1)**0.25)+1)/(((1+(((4*A2*LE*IO**4)/(1+(z**2/ZO**2))**4)*x**4)**-1)**0.25)-1))))-(atan(((1+(((4*A2*LE*IO**4)/(1+(z**2/ZO**2))**4)*x**4)**-1)**0.25)))+(1.571)))/(x*sqrt(-log(x)))
+                      
+      res3, err = quad(f, 0.0001, 0.9999)
+
+      roundZ = round(IO, 3)
+      roundZ1 = str(roundZ)
+      res2 = round(res, 5)
+      res4 = round(res3, 5)
+      dres2 = res2 - res4
+      dres3 = round(dres2, 2)
+      res1 = str(res2)
+      res5 = str(res4)
+      dres = str(dres3)
+      f = open("5pa_TvI_output.txt", "a")
+      f.write(roundZ1 + " " + res1+ " " + res5 + " " + dres + "\n") 
+      f.close()
+      roundz = round(IO, 3)
+      ck3_2.append(roundz)
+      ck4_5.append(dres)
+      IO = IO + ii
+      j = j + 1
+      d21 = max(ck4_5)
+      d5 = float(d21)
+    print('\n \n Done! You can check the output from 5pa_TvI_output.txt')
+
+  xpoints = np.array(ck3_2)
+  ypoints_2 = np.array(ck4_2)  
+  ypoints_3 = np.array(ck4_3)
+  ypoints_4 = np.array(ck4_4)
+  ypoints_5 = np.array(ck4_5)
+
+  result_y2 = []
+  result_y3 = []
+  result_y4 = []
+  result_y5 = []
+
+  for x in ypoints_2:
+    float(x)
+    y = float(x) / d2 * 100
+    result_y2.append(y)
+
+  for x in ypoints_3:
+    float(x)
+    y = float(x) / d3 * 100
+    result_y3.append(y)
+
+  for x in ypoints_4:
+    float(x)
+    y = float(x) / d4 * 100
+    result_y4.append(y)
+
+  for x in ypoints_5:
+    float(x)
+    y = float(x) / d5 * 100
+    result_y5.append(y)
+          
+  if '6' in m_input_2 or '0' in m_input_2:
+  
+    plt.plot(xpoints, result_y2, marker = '*', mec = 'k', mfc = 'k')
+  if '7' in m_input_2 or '0' in m_input_2:
+   
+    plt.plot(xpoints, result_y3, marker = '^', mec = 'r', mfc = 'r')
+  if '8' in m_input_2 or '0' in m_input_2:
+
+    plt.plot(xpoints, result_y4, marker = 'o', mec = 'g', mfc = 'g')
+  if '9' in m_input_2 or '0' in m_input_2:
+    
+    plt.plot(xpoints, result_y5, marker = 's', mec = 'm', mfc = 'm') 
+  if '6' in m_input_2 or '7' in m_input_2 or '8' in m_input_2 or '9' in m_input_2 or '0' in m_input_2:        
+    print('\n\n2pa is black *, 3pa is red triangle, 4pa is green circle and 5pa is purple square')
+    font2 = {'family':'serif','color':'darkred','size':12}
+    plt.xlabel("Intensity (W/cm2)", fontdict = font2)
+    plt.ylabel("ΔT (%)", fontdict = font2)
+    plt.grid(color = '#C0C0C0', linestyle = '--', linewidth = 0.5)
+#    axes = plt.gca()
+#    axes.set_yscale("log")
+#    axes.set_xscale("log")
+    plt.legend(['2PA','3PA','4PA','5PA'])
+    plt.show()
+
+if '3' in m_input:
+  print(
+  '''
+  ************** Optical limiting graph with varied intensities **************
+   NLA for 2PA, 3PA, 4PA and 5PA will be extracted from
+   Input.txt : PART (B) INPUT FOR NPA GRAPH GENERATIONS
+
+   1 Show the content of "input.txt". 
+   2 2PA with varied intensities
+   3 3PA with varied intensities
+   4 4PA with varied intensities
+   5 5PA with varied intensities
+   6 2PA + Input Vs Output intensities Graph
+   7 3PA + Input Vs Output intensities Graph
+   8 4PA + Input Vs Output intensities Graph
+   9 5PA + Input Vs Output intensities Graph
+   0 Calculate ALL and generate graphs
+   -1 Return to Main Menu Option          
+  '''
+  )
+  m_input_3 = input ("Enter number:")
+
+  ck5_2 = []  
+  ck5_3 = []  
+  ck5_4 = []  
+  ck5_5 = []  
+  
+  
+  if '1' in m_input_3:
+    f_input = open("input.txt")
+    lines = f_input.readlines()
+    for line in lines:
+      print(line)
+
+  if '2' in m_input_3 or '6' in m_input_3 or '0' in m_input_3:
+
+    f = open("2pa_OL_output.txt", "w")
+    f.write('Output is in the seqeuence of "Input Intensity", "Output Intensity" \n\n') 
+    f.close()
+    print(' Calculating 2pa_Input Vs Output intensities...')
+    
+    ck5_1 = []
+    IO = l_SI2
+    A0 = l_AO
+    A2 = l_A2
+    A3 = l_A3
+    A4 = l_A4
+    A5 = l_A5
+    LE = l_LE
+    i = l_RI2
+    ii = l_II2
+    WO2 = l_WO2
+    z = 0
+    j = 0
+            
+    while j < i:
+      QO = (A2*IO*LE)/(1+(z**2/ZO**2))
+      PulsePower = 1.571215*IO*WO2*WO2*exp(-LE*A0)*log(QO+1)/QO
+      res = 2 * PulsePower / (3.142 * WO2 * WO2)        
+    
+      roundZ = round(IO, 4)
+      roundZ1 = str(roundZ)
+      res2 = round(res, 5)
+      res1 = str(res2)
+      f = open("2pa_OL_output.txt", "a")
+      f.write(roundZ1 + " " + res1+  "\n") 
+      f.close()
+      roundz = round(IO, 3)
+      ck5_1.append(roundz)
+      ck5_2.append(res1)
+      IO = IO + ii
+      j = j + 1
+      
+    print('\n \n Done! You can check the output from 2pa_OL_output.txt')
+
+  if '3' in m_input_3 or '7' in m_input_3 or '0' in m_input_3:
+
+    f = open("3pa_OL_output.txt", "w")
+    f.write('Output is in the seqeuence of "Input Intensity", "Output Intensity" \n\n') 
+    f.close()
+    print(' Calculating 3pa_Input Vs Output intensities...')
+    
+    ck5_1 = []
+    IO = l_SI2
+    A0 = l_AO
+    A2 = l_A2
+    A3 = l_A3
+    A4 = l_A4
+    A5 = l_A5
+    LE = l_LE
+    i = l_RI2
+    ii = l_II2
+    WO2 = l_WO2
+    z = 0
+    j = 0
+            
+    while j < i:
+      QO = 2*A3*LE*IO**2/((1+(z**2/ZO**2))**2)
+      WZ2 = WO2**2*((1+(z**2/ZO**2)))
+      PulsePower = (1.571215*WZ2/((2*A3*LE)**(1/2)))*(log((1+QO)**(1/2)+QO**(1/2)))
+      res = 2 * PulsePower / (3.142 * WO2 * WO2)        
+    
+    
+      roundZ = round(IO, 4)
+      roundZ1 = str(roundZ)
+      res2 = round(res, 5)
+      res1 = str(res2)
+      f = open("3pa_OL_output.txt", "a")
+      f.write(roundZ1 + " " + res1+  "\n") 
+      f.close()
+      roundz = round(IO, 3)
+      ck5_1.append(roundz)
+      ck5_3.append(res1)
+      IO = IO + ii
+      j = j + 1
+      
+    print('\n \n Done! You can check the output from 3pa_OL_output.txt')
+
+  if '4' in m_input_3 or '8' in m_input_3 or '0' in m_input_3:
+
+    f = open("4pa_OL_output.txt", "w")
+    f.write('Output is in the seqeuence of "Input Intensity", "Output Intensity" \n\n') 
+    f.close()
+    print(' Calculating 4pa_Input Vs Output intensities...')
+    
+    ck5_1 = []
+    IO = l_SI2
+    A0 = l_AO
+    A2 = l_A2
+    A3 = l_A3
+    A4 = l_A4
+    A5 = l_A5
+    LE = l_LE
+    i = l_RI2
+    ii = l_II2
+    WO2 = l_WO2
+    z = 0
+    j = 0
+            
+    while j < i:
+      QO = (1+(3*A4*LE*IO**3/(1+(z**2/ZO**2))**3)**-1)**(1/3)
+      WZ2 = WO2**2*((1+(z**2/ZO**2)))
+      PulsePower = (0.52367*WZ2/((3*A4*LE)**(1/3)))*(((log((QO**2+QO+1)**(1/2)/(QO-1))))-1.7321*atan((2*QO+1)/1.7321)+2.7122)
+      res = 2 * PulsePower / (3.142 * WO2 * WO2)        
+    
+    
+      roundZ = round(IO, 4)
+      roundZ1 = str(roundZ)
+      res2 = round(res, 5)
+      res1 = str(res2)
+      f = open("4pa_OL_output.txt", "a")
+      f.write(roundZ1 + " " + res1+  "\n") 
+      f.close()
+      roundz = round(IO, 3)
+      ck5_1.append(roundz)
+      ck5_4.append(res1)
+      IO = IO + ii
+      j = j + 1
+      
+    print('\n \n Done! You can check the output from 4pa_OL_output.txt')
+
+  if '5' in m_input_3 or '9' in m_input_3 or '0' in m_input_3:
+
+    f = open("5pa_OL_output.txt", "w")
+    f.write('Output is in the seqeuence of "Input Intensity", "Output Intensity" \n\n') 
+    f.close()
+    print(' Calculating 5pa_Input Vs Output intensities...')
+    
+    ck5_1 = []
+    IO = l_SI2
+    A0 = l_AO
+    A2 = l_A2
+    A3 = l_A3
+    A4 = l_A4
+    A5 = l_A5
+    LE = l_LE
+    i = l_RI2
+    ii = l_II2
+    WO2 = l_WO2
+    z = 0
+    j = 0
+            
+    while j < i:
+      QO = (1+(4*A5*LE*IO**4/(1+(z**2/ZO**2))**4)**-1)**(1/4)
+      WZ2 = WO2**2*((1+(z**2/ZO**2)))
+      PulsePower = (0.7855*WZ2/((4*A5*LE)**(1/4)))*(log(((QO+1)/(QO-1))**(1/2))-atan(QO)+1.571)
+      res = 2 * PulsePower / (3.142 * WO2 * WO2)        
+    
+      roundZ = round(IO, 4)
+      roundZ1 = str(roundZ)
+      res2 = round(res, 5)
+      res1 = str(res2)
+      f = open("5pa_OL_output.txt", "a")
+      f.write(roundZ1 + " " + res1+  "\n") 
+      f.close()
+      roundz = round(IO, 3)
+      ck5_1.append(roundz)
+      ck5_5.append(res1)
+      IO = IO + ii
+      j = j + 1
+      
+    print('\n \n Done! You can check the output from 5pa_OL_output.txt')
+
+  xpoints = np.array(ck5_1)
+  ypoints_2 = np.array(ck5_2)
+  ypoints_3 = np.array(ck5_3)
+  ypoints_4 = np.array(ck5_4)
+  ypoints_5 = np.array(ck5_5)
+  
+  result_y2 = []
+  result_y3 = []
+  result_y4 = []
+  result_y5 = []
+
+  for x in ypoints_2:
+    float(x)
+    y = float(x) 
+    result_y2.append(y)
+
+  for x in ypoints_3:
+    float(x)
+    y = float(x)
+    result_y3.append(y)
+
+  for x in ypoints_4:
+    float(x)
+    y = float(x)
+    result_y4.append(y)
+
+  for x in ypoints_5:
+    float(x)
+    y = float(x)
+    result_y5.append(y)
+  
+  if '6' in m_input_3 or '0' in m_input_3:
+    
+    plt.plot(xpoints, result_y2, marker = '*', mec = 'k', mfc = 'k')
+
+  if '7' in m_input_3 or '0' in m_input_3:
+    
+    plt.plot(xpoints, result_y3, marker = '^', mec = 'r', mfc = 'r')
+
+  if '8' in m_input_3 or '0' in m_input_3:
+    
+    plt.plot(xpoints, result_y4, marker = 'o', mec = 'g', mfc = 'g')
+
+  if '9' in m_input_3 or '0' in m_input_3:
+    
+    plt.plot(xpoints, result_y5, marker = 's', mec = 'm', mfc = 'm') 
+
+  if '6' in m_input_3 or '7' in m_input_3 or '8' in m_input_3 or '9' in m_input_3 or '0' in m_input_3:        
+    print('\n\n2pa is black *, 3pa is red triangle, 4pa is green circle and 5pa is purple square')
+    font2 = {'family':'serif','color':'darkred','size':12}
+    plt.xlabel("Input Intensity (W/cm2)", fontdict = font2)
+    plt.ylabel("Output Intensity (W/cm2)", fontdict = font2)
+    plt.grid(color = '#C0C0C0', linestyle = '--', linewidth = 0.5)
+
+    axes = plt.gca()
+    axes.set_yscale("log")
+    plt.legend(['2PA','3PA','4PA','5PA'])
+    plt.show()
+
+
+if '4' in m_input:
+  print(
+  '''
+  ************** Calculation of cross-section NPA **************
+  This function will calculate the cross-section NPA and postulate
+  NLA for 3PA, 4PA and 5PA based on experimentally obtained
+  NLA for 2PA which is "alpha 2", a2:
+  
+  1 General cross-section sigma
+  2 2PA (a2 and cross-section sigma, a2 is experimentally obtained) 
+  3 3PA (a3 and cross-section sigma)
+  4 4PA (a4 and cross-section sigma)
+  5 5PA (a5 and cross-section sigma)
+  0 Calculate ALL 
+  '''
+  )
+  m_input_4 = input ("Enter number:")
+
+  ea2 = l_EA2
+  ewl = l_EW
+  con = l_CO
+  IO2 = l_EI
+
+  sig2 = ea2*((6.63E-34)*(3.00E+10)/(ewl*10**-7))/con
+  sig = sig2*(IO2*(ewl*10**-7)/((6.63E-34)*(3.00E+10)))
+
+  Sig3pa = sig*((6.63E-34)*(3.00E+10)/(IO2*(ewl*10**-7)))**(2)
+  A3pa = Sig3pa*con/((6.63E-34)*(3.00E+10)/(ewl*10**-7))**(2)
+
+  Sig4pa = sig*((6.63E-34)*(3.00E+10)/(IO2*(ewl*10**-7)))**(3)
+  A4pa = Sig4pa*con/((6.63E-34)*(3.00E+10)/(ewl*10**-7))**(3)
+
+  Sig5pa = sig*((6.63E-34)*(3.00E+10)/(IO2*(ewl*10**-7)))**(4)
+  A5pa = Sig5pa*con/((6.63E-34)*(3.00E+10)/(ewl*10**-7))**(4)
+  
+  if '1' in m_input_4 or '0' in m_input_4:
+    print("\nGeneral cross-section sigma is (in cm^2)")
+    print(sig)
+
+  if '2' in m_input_4 or '0' in m_input_4:
+    print("\nNonlinear Absorption coefficient for 2PA is")
+    print(l_EA2)
+    print("\nCross-section for 2PA sigma is")
+    print(sig2)
+
+  if '3' in m_input_4 or '0' in m_input_4:
+    print("\nNonlinear Absorption coefficient for 3PA is")
+    print(A3pa)
+    print("\nCross-section for 3PA sigma is")
+    print(Sig3pa)
+
+  if '4' in m_input_4 or '0' in m_input_4:
+    print("\nNonlinear Absorption coefficient for 4PA is")
+    print(A4pa)
+    print("\nCross-section for 4PA sigma is")
+    print(Sig4pa)
+
+  if '5' in m_input_4 or '0' in m_input_4:
+    print("\nNonlinear Absorption coefficient for 5PA is")
+    print(A5pa)
+    print("\nCross-section for 5PA sigma is")
+    print(Sig5pa)
+
+     
+
